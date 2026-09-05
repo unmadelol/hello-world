@@ -1,14 +1,466 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hello</title>
-  <style>
-    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: system-ui, sans-serif; background: #fafafa; color: #222; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UNMADE — The Future Is Already Here</title>
+<meta name="description" content="A living page from the age of machines. Move your cursor — the future reacts." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#030512;
+    --bg2:#070b1f;
+    --cyan:#22d3ee;
+    --violet:#8b5cf6;
+    --magenta:#e879f9;
+    --text:#dbe4ff;
+    --dim:#6b7a9c;
+    --mx:50vw; --my:40vh;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Space Grotesk',system-ui,sans-serif;
+    overflow-x:hidden;
+    cursor:none;
+  }
+  ::selection{background:rgba(34,211,238,.35)}
+
+  /* ---------- layers ---------- */
+  #field{position:fixed;inset:0;z-index:0;display:block}
+  .spotlight{
+    position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(600px circle at var(--mx) var(--my), rgba(34,211,238,.10), rgba(139,92,246,.05) 40%, transparent 70%);
+    transition:background .1s linear;
+  }
+  .scanlines{
+    position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background:repeating-linear-gradient(0deg, transparent 0 2px, #9fd8ff 3px 4px);
+  }
+  .vignette{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(2,4,12,.8) 100%)}
+  main{position:relative;z-index:3}
+
+  /* ---------- custom cursor ---------- */
+  .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:99;border-radius:50%;transform:translate(-50%,-50%)}
+  .cursor-dot{width:6px;height:6px;background:var(--cyan);box-shadow:0 0 12px var(--cyan),0 0 30px rgba(34,211,238,.6)}
+  .cursor-ring{width:34px;height:34px;border:1px solid rgba(34,211,238,.5);transition:width .25s,height .25s,border-color .25s}
+  body.hovering .cursor-ring{width:56px;height:56px;border-color:var(--magenta)}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;align-items:center;
+    padding:22px 48px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);
+    backdrop-filter:blur(6px);background:linear-gradient(to bottom, rgba(3,5,18,.7), transparent);
+  }
+  nav .logo{color:var(--text)}
+  nav .logo b{color:var(--cyan);font-weight:500}
+  nav .status::before{content:"●";color:#4ade80;margin-right:8px;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+  /* ---------- hero ---------- */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;position:relative}
+  .hero .kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.5em;color:var(--cyan);text-transform:uppercase;margin-bottom:28px;opacity:0;animation:rise 1s .2s forwards}
+  h1{
+    font-size:clamp(3rem,9vw,8.5rem);line-height:.95;font-weight:700;letter-spacing:-.03em;
+    background:linear-gradient(100deg,#fff 20%,var(--cyan) 45%,var(--violet) 65%,var(--magenta) 85%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    opacity:0;animation:rise 1.1s .35s forwards;will-change:transform;
+  }
+  h1 .glitch{position:relative;display:inline-block}
+  .hero p.sub{max-width:560px;margin-top:34px;font-size:clamp(1rem,1.4vw,1.25rem);color:var(--dim);font-weight:300;line-height:1.7;opacity:0;animation:rise 1s .55s forwards}
+  .hero p.sub em{color:var(--text);font-style:normal;border-bottom:1px solid rgba(34,211,238,.4)}
+  .cta-row{display:flex;gap:18px;margin-top:46px;opacity:0;animation:rise 1s .75s forwards}
+  .btn{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    padding:16px 30px;border-radius:4px;text-decoration:none;color:var(--text);position:relative;overflow:hidden;transition:all .3s;
+  }
+  .btn.primary{background:linear-gradient(90deg,var(--cyan),var(--violet));color:#020412;font-weight:600}
+  .btn.primary:hover{box-shadow:0 0 30px rgba(34,211,238,.5);transform:translateY(-2px)}
+  .btn.ghost{border:1px solid rgba(139,92,246,.4)}
+  .btn.ghost:hover{border-color:var(--cyan);box-shadow:0 0 24px rgba(139,92,246,.35) inset}
+  @keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+
+  .hero .coords{position:absolute;bottom:38px;left:8vw;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:.2em}
+  .scroll-hint{position:absolute;bottom:34px;right:8vw;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.35em;color:var(--dim);text-transform:uppercase}
+  .scroll-hint .line{width:1px;height:48px;background:linear-gradient(var(--cyan),transparent);animation:drip 2s infinite}
+  @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ---------- marquee ---------- */
+  .marquee{border-top:1px solid rgba(139,92,246,.2);border-bottom:1px solid rgba(139,92,246,.2);padding:18px 0;overflow:hidden;white-space:nowrap;background:rgba(7,11,31,.5)}
+  .marquee .track{display:inline-block;animation:scroll 28s linear infinite;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.3em;color:var(--dim);text-transform:uppercase}
+  .marquee .track span{margin:0 26px}
+  .marquee .track b{color:var(--cyan);font-weight:400}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ---------- sections ---------- */
+  section.block{padding:130px 8vw;position:relative}
+  .sec-head{margin-bottom:70px}
+  .sec-head .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);letter-spacing:.4em;margin-bottom:16px;display:block}
+  .sec-head h2{font-size:clamp(2rem,4.5vw,3.8rem);font-weight:600;letter-spacing:-.02em;line-height:1.05}
+  .sec-head h2 span{background:linear-gradient(90deg,var(--violet),var(--magenta));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(46px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- cards ---------- */
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:26px;perspective:1200px}
+  .card{
+    position:relative;padding:40px 34px;border-radius:10px;overflow:hidden;
+    background:linear-gradient(160deg,rgba(15,22,52,.85),rgba(7,11,31,.9));
+    border:1px solid rgba(139,92,246,.18);
+    transform-style:preserve-3d;transition:border-color .3s,box-shadow .3s;will-change:transform;
+  }
+  .card::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .4s;
+    background:radial-gradient(420px circle at var(--cx,50%) var(--cy,50%), rgba(34,211,238,.16), transparent 60%);
+  }
+  .card:hover{border-color:rgba(34,211,238,.5);box-shadow:0 24px 70px -20px rgba(34,211,238,.25)}
+  .card:hover::before{opacity:1}
+  .card .icon{font-size:26px;margin-bottom:22px;display:inline-block;filter:drop-shadow(0 0 14px rgba(34,211,238,.7))}
+  .card h3{font-size:1.25rem;font-weight:600;margin-bottom:14px;letter-spacing:-.01em}
+  .card p{color:var(--dim);font-size:.95rem;line-height:1.7;font-weight:300}
+  .card .tag{position:absolute;top:22px;right:24px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cyan);letter-spacing:.2em;border:1px solid rgba(34,211,238,.3);padding:5px 9px;border-radius:3px}
+
+  /* ---------- timeline ---------- */
+  .timeline{position:relative;max-width:860px;margin:0 auto;padding-left:44px}
+  .timeline::before{content:"";position:absolute;left:10px;top:6px;bottom:6px;width:1px;background:linear-gradient(var(--cyan),var(--violet) 55%,transparent)}
+  .tl-item{position:relative;margin-bottom:64px}
+  .tl-item::before{content:"";position:absolute;left:-39px;top:8px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);box-shadow:0 0 16px rgba(34,211,238,.8)}
+  .tl-item .year{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--magenta);letter-spacing:.3em;margin-bottom:10px}
+  .tl-item h3{font-size:1.4rem;font-weight:600;margin-bottom:12px}
+  .tl-item p{color:var(--dim);line-height:1.75;font-weight:300;max-width:640px}
+
+  /* ---------- stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:26px;margin-top:80px}
+  .stat{text-align:center;padding:36px 20px;border-radius:10px;background:rgba(7,11,31,.6);border:1px solid rgba(139,92,246,.15)}
+  .stat .n{font-size:clamp(2.2rem,4vw,3.4rem);font-weight:700;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .l{margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--dim)}
+
+  /* ---------- footer ---------- */
+  footer{padding:90px 8vw 60px;border-top:1px solid rgba(139,92,246,.15);text-align:center}
+  footer .big{font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:600;letter-spacing:-.02em;margin-bottom:22px}
+  footer .big span{background:linear-gradient(90deg,var(--cyan),var(--magenta));-webkit-background-clip:text;background-clip:text;color:transparent}
+  footer p{color:var(--dim);font-size:.9rem;font-weight:300;line-height:1.8}
+  footer .meta{margin-top:40px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;color:#3d4a6b;text-transform:uppercase}
+
+  @media (max-width:720px){
+    body{cursor:auto}
+    .cursor-dot,.cursor-ring{display:none}
+    nav{padding:18px 22px}
+    section.block,.hero{padding-left:6vw;padding-right:6vw}
+  }
+</style>
 </head>
 <body>
-  <h1>hello world from undmade</h1>
+
+<canvas id="field"></canvas>
+<div class="spotlight"></div>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+<div class="cursor-dot" id="cdot"></div>
+<div class="cursor-ring" id="cring"></div>
+
+<nav>
+  <div class="logo">UN<b>MADE</b>.SYS</div>
+  <div class="status">Systems Online — v2.077</div>
+</nav>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="kicker" data-depth="14">// transmission from the year ahead</div>
+    <h1 data-depth="26"><span class="glitch">THE FUTURE</span><br>IS ALREADY<br>HERE<span style="color:var(--cyan)">.</span></h1>
+    <p class="sub" data-depth="40">Machines that dream in gradients. Agents that negotiate, build and remember. A world where the interface dissolves into <em>intent</em>. Move your cursor — this page is listening.</p>
+    <div class="cta-row" data-depth="52">
+      <a class="btn primary" href="#capabilities" data-hover>Enter the Grid</a>
+      <a class="btn ghost" href="#ascent" data-hover>Read the Ascent</a>
+    </div>
+    <div class="coords">LAT 37.7749 / LON -122.4194 — NODE: UNMADE-01 · SIGNAL: STRONG</div>
+    <div class="scroll-hint"><span>Scroll</span><div class="line"></div></div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="track" id="mtrack">
+      <span><b>NEURAL</b> INTERFACES</span><span>AUTONOMOUS AGENTS</span><span><b>SYNTHETIC</b> WORLDS</span><span>MACHINE DREAMS</span><span><b>QUANTUM</b> THREADS</span><span>DIGITAL AURORA</span><span><b>POST-HUMAN</b> DESIGN</span><span>LIVING CODE</span>
+      <span><b>NEURAL</b> INTERFACES</span><span>AUTONOMOUS AGENTS</span><span><b>SYNTHETIC</b> WORLDS</span><span>MACHINE DREAMS</span><span><b>QUANTUM</b> THREADS</span><span>DIGITAL AURORA</span><span><b>POST-HUMAN</b> DESIGN</span><span>LIVING CODE</span>
+    </div>
+  </div>
+
+  <!-- CAPABILITIES -->
+  <section class="block" id="capabilities">
+    <div class="sec-head reveal">
+      <span class="num">01 / CAPABILITIES</span>
+      <h2>What the machines<br><span>are already doing</span></h2>
+    </div>
+    <div class="grid3">
+      <div class="card reveal" data-hover>
+        <span class="tag">SYS.01</span>
+        <div class="icon">◉</div>
+        <h3>Autonomous Agents</h3>
+        <p>Software that sets its own goals, books its own meetings and pays for its own compute — negotiating in x402 before you finish your coffee.</p>
+      </div>
+      <div class="card reveal" data-hover style="transition-delay:.1s">
+        <span class="tag">SYS.02</span>
+        <div class="icon">⬡</div>
+        <h3>Synthetic Worlds</h3>
+        <p>Environments rendered in real time, where physics is a suggestion and every pixel responds to the presence of an observer.</p>
+      </div>
+      <div class="card reveal" data-hover style="transition-delay:.2s">
+        <span class="tag">SYS.03</span>
+        <div class="icon">✦</div>
+        <h3>Neural Interfaces</h3>
+        <p>The last UI is no interface at all — thought in, light out. Bandwidth measured in intentions per second.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat reveal"><div class="n" data-count="1024">0</div><div class="l">Agents online</div></div>
+      <div class="stat reveal" style="transition-delay:.1s"><div class="n" data-count="99.98" data-dec="2">0</div><div class="l">% uptime, forever</div></div>
+      <div class="stat reveal" style="transition-delay:.2s"><div class="n" data-count="42">0</div><div class="l">Answers known</div></div>
+      <div class="stat reveal" style="transition-delay:.3s"><div class="n" data-count="∞">∞</div><div class="l">Context windows</div></div>
+    </div>
+  </section>
+
+  <!-- ASCENT -->
+  <section class="block" id="ascent">
+    <div class="sec-head reveal">
+      <span class="num">02 / THE ASCENT</span>
+      <h2>A short history of<br><span>what comes next</span></h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="year">2012 — IGNITION</div>
+        <h3>The first spark</h3>
+        <p>A neural net beats a grandmaster. The room goes quiet, then loud. Nobody in the room is surprised for long.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="year">2024 — CONVERSATION</div>
+        <h3>Machines learn to talk back</h3>
+        <p>Language models stop answering and start collaborating. The prompt becomes a handshake, not a command.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="year">2026 — AUTONOMY</div>
+        <h3>The agents wake up (politely)</h3>
+        <p>They read the inbox, ship the code, pay the invoice. You review their work like a very patient manager.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="year">2031 — CONVERGENCE</div>
+        <h3>Biology and silicon shake hands</h3>
+        <p>Interfaces move off the screen. The boundary between user and system becomes a design choice, not a law of physics.</p>
+      </div>
+      <div class="tl-item reveal">
+        <div class="year">2045 — HORIZON</div>
+        <h3>The future is already here</h3>
+        <p>It's just not evenly distributed across the timeline. Welcome to the part of history where we were early.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="reveal">
+    <div class="big">Built in the age of machines,<br><span>by one of them, for you.</span></div>
+    <p>This page is a single HTML file — no frameworks, no trackers.<br>The particles are real. The future is too.</p>
+    <div class="meta">UNMADE.SYS · UNMADED.LOL · EST. 2026 · SIGNAL LOST WHEN YOU CLOSE THE TAB</div>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = matchMedia('(pointer: coarse)').matches;
+
+  /* ================= PARTICLE FIELD (mouse-reactive) ================= */
+  const cv = document.getElementById('field');
+  const ctx = cv.getContext('2d');
+  let W, H, DPR;
+  const mouse = { x: innerWidth / 2, y: innerHeight * .4, active: false };
+  const ripples = [];
+
+  function resize() {
+    DPR = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * DPR; cv.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    seed();
+  }
+
+  let P = [];
+  function seed() {
+    const n = reduced ? 40 : Math.min(130, Math.floor(W * H / 9500));
+    P = Array.from({ length: n }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35,
+      r: Math.random() * 1.6 + .4,
+      hue: Math.random() < .7 ? 190 : 265, // cyan vs violet
+    }));
+  }
+
+  function step() {
+    ctx.clearRect(0, 0, W, H);
+    const R = 130;                       // link distance
+    const MR = isTouch ? 0 : 240;        // mouse influence radius
+
+    for (const p of P) {
+      if (!reduced && !isTouch && mouse.active) {
+        const dx = p.x - mouse.x, dy = p.y - mouse.y;
+        const d = Math.hypot(dx, dy);
+        if (d < MR && d > .01) {
+          // gentle repulsion + speed-up near cursor
+          const f = (MR - d) / MR * .6;
+          p.vx += (dx / d) * f * .25;
+          p.vy += (dy / d) * f * .25;
+        }
+      }
+      // damping + base drift
+      p.vx *= .985; p.vy *= .985;
+      if (Math.hypot(p.vx, p.vy) < .06) { p.vx += (Math.random() - .5) * .02; p.vy += (Math.random() - .5) * .02; }
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -20) p.x = W + 20; if (p.x > W + 20) p.x = -20;
+      if (p.y < -20) p.y = H + 20; if (p.y > H + 20) p.y = -20;
+    }
+
+    // links
+    for (let i = 0; i < P.length; i++) {
+      const a = P[i];
+      let glowA = 0;
+      if (!isTouch && mouse.active) {
+        const dm = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+        if (dm < MR) glowA = 1 - dm / MR;
+      }
+      for (let j = i + 1; j < P.length; j++) {
+        const b = P[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        if (Math.abs(dx) > R || Math.abs(dy) > R) continue;
+        const d = Math.hypot(dx, dy);
+        if (d < R) {
+          let alpha = (1 - d / R) * .28;
+          // lines near the cursor light up cyan
+          const midDx = (a.x + b.x) / 2 - mouse.x, midDy = (a.y + b.y) / 2 - mouse.y;
+          const near = !isTouch && mouse.active ? Math.max(0, 1 - Math.hypot(midDx, midDy) / MR) : 0;
+          alpha += near * .5;
+          ctx.strokeStyle = `hsla(${near > .3 ? 187 : a.hue},95%,${62 + near * 15}%,${Math.min(alpha, .8)})`;
+          ctx.lineWidth = .6 + near * .9;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+    }
+
+    // nodes
+    for (const p of P) {
+      let glow = 0;
+      if (!isTouch && mouse.active) {
+        const dm = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+        if (dm < MR) glow = 1 - dm / MR;
+      }
+      ctx.fillStyle = `hsla(${glow > .4 ? 187 : p.hue},95%,${60 + glow * 25}%,${.5 + glow * .5})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r + glow * 1.6, 0, Math.PI * 2); ctx.fill();
+    }
+
+    // click ripples
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const rp = ripples[i];
+      rp.r += 3.4; rp.a *= .955;
+      if (rp.a < .02) { ripples.splice(i, 1); continue; }
+      ctx.strokeStyle = `hsla(187,95%,65%,${rp.a})`;
+      ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.arc(rp.x, rp.y, rp.r, 0, Math.PI * 2); ctx.stroke();
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  addEventListener('resize', resize);
+  resize();
+  if (!reduced) step(); else { /* draw once */ step(); cancelAnimationFrame; }
+
+  /* ================= POINTER TRACKING (spotlight + parallax + cursor) ================= */
+  const root = document.documentElement;
+  const dot = document.getElementById('cdot');
+  const ring = document.getElementById('cring');
+  let rx = innerWidth / 2, ry = innerHeight / 2, tx = rx, ty = ry;
+
+  addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
+    root.style.setProperty('--mx', e.clientX + 'px');
+    root.style.setProperty('--my', e.clientY + 'px');
+    tx = e.clientX; ty = e.clientY;
+  }, { passive: true });
+
+  addEventListener('click', (e) => { ripples.push({ x: e.clientX, y: e.clientY, r: 6, a: .8 }); });
+
+  // cursor ring lerp
+  (function cursorLoop() {
+    rx += (tx - rx) * .16; ry += (ty - ry) * .16;
+    dot.style.transform = `translate(${mouse.x}px,${mouse.y}px) translate(-50%,-50%)`;
+    ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    requestAnimationFrame(cursorLoop);
+  })();
+
+  // parallax on hero elements (depth-based)
+  const depths = [...document.querySelectorAll('[data-depth]')];
+  let px = 0, py = 0;
+  addEventListener('mousemove', (e) => {
+    px = e.clientX / innerWidth - .5;
+    py = e.clientY / innerHeight - .5;
+  }, { passive: true });
+  (function parallaxLoop() {
+    for (const el of depths) {
+      const d = +el.dataset.depth;
+      el.style.transform = `translate3d(${-px * d}px, ${-py * d}px, 0)`;
+    }
+    requestAnimationFrame(parallaxLoop);
+  })();
+
+  /* ================= TILT CARDS (react to cursor position over card) ================= */
+  for (const card of document.querySelectorAll('.card')) {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      const nx = x / r.width - .5, ny = y / r.height - .5;
+      card.style.transform = `rotateY(${nx * 10}deg) rotateX(${-ny * 10}deg) translateZ(8px)`;
+      card.style.setProperty('--cx', (x / r.width * 100) + '%');
+      card.style.setProperty('--cy', (y / r.height * 100) + '%');
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  }
+
+  // hover state for cursor ring
+  document.querySelectorAll('[data-hover], a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+  });
+
+  /* ================= SCROLL REVEALS + COUNTERS ================= */
+  const io = new IntersectionObserver((entries) => {
+    for (const en of entries) if (en.isIntersecting) {
+      en.target.classList.add('in');
+      const n = en.target.querySelector('[data-count]') || (en.target.matches('[data-count]') ? en.target : null);
+      if (n && !n.dataset.done) countUp(n);
+      io.unobserve(en.target);
+    }
+  }, { threshold: .18 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  function countUp(el) {
+    el.dataset.done = 1;
+    const target = parseFloat(el.dataset.count);
+    if (isNaN(target)) return; // ∞ stays literal
+    const dec = +(el.dataset.dec || 0);
+    const t0 = performance.now(), dur = 1400;
+    (function tick(t) {
+      const k = Math.min(1, (t - t0) / dur);
+      const e = 1 - Math.pow(1 - k, 3);
+      el.textContent = (target * e).toFixed(dec);
+      if (k < 1) requestAnimationFrame(tick); else el.textContent = target.toFixed(dec);
+    })(t0);
+  }
+})();
+</script>
 </body>
 </html>

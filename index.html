@@ -27,7 +27,7 @@ a{color:inherit;text-decoration:none}
 .cta{background:var(--accent);color:#0c0e12;font-weight:700;padding:9px 16px;border-radius:8px;font-size:13.5px;transition:.15s}
 .cta:hover{filter:brightness(1.08)}
 
-/* ---------- hero (Decide/Learn) ---------- */
+/* ---------- hero ---------- */
 .hero{padding:84px 0 60px;position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(720px 340px at 78% -10%,var(--accent-soft),transparent 70%);pointer-events:none}
 .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:7px 13px;border-radius:999px;margin-bottom:26px}
@@ -47,73 +47,33 @@ h1 em{color:var(--accent);font-style:normal}
 .sec-head h2{font-size:clamp(24px,3vw,34px);letter-spacing:-.01em;font-weight:800}
 .sec-head p{color:var(--muted);margin-top:8px;max-width:52ch;font-size:15px}
 
-/* ---------- portfolio grid (Explore) ---------- */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:26px 0 70px}
-@media(max-width:940px){.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.grid{grid-template-columns:1fr}}
+/* ---------- portfolio grid ---------- */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;padding:26px 0 70px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
 
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s;display:flex;flex-direction:column;position:relative}
 .card:hover{transform:translateY(-4px);border-color:#3a4150;box-shadow:0 18px 40px -20px rgba(0,0,0,.7)}
-.live-badge{position:absolute;top:12px;right:12px;z-index:5;background:#22c55e;color:#04220f;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 10px;border-radius:20px;box-shadow:0 4px 12px -2px rgba(34,197,94,.5)}
-.m-live-cta{padding:0 34px 34px}
-.m-live-cta a{display:inline-flex;align-items:center;gap:8px;background:var(--p-accent);color:var(--p-on);font-weight:800;font-size:14px;padding:13px 22px;border-radius:8px;text-decoration:none;transition:transform .2s}
-.m-live-cta a:hover{transform:translateY(-2px)}
-/* the mini-site preview inside each card — themed per trade via inline vars */
-.preview{position:relative;min-height:248px;padding:16px 16px 18px;display:flex;flex-direction:column;background:var(--p-bg);color:var(--p-ink);font-family:var(--p-font);flex:1 0 auto}
-.pv-topbar{display:flex;align-items:center;justify-content:space-between;font-size:11.5px;font-weight:700}
-.pv-logo{display:flex;align-items:center;gap:7px}
-.pv-logo .mark{width:16px;height:16px;border-radius:4px;background:var(--p-accent)}
-.pv-nav{opacity:.7;display:flex;gap:9px;font-weight:500}
-.pv-hero{margin-top:auto;padding-top:20px;display:flex;flex-direction:column}
-.pv-kicker{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--p-accent);font-weight:700;margin-bottom:8px}
-.pv-h{font-size:23px;line-height:1.06;font-weight:800;letter-spacing:-.01em}
-.pv-sub{font-size:12px;opacity:.82;margin-top:9px;max-width:34ch}
-.pv-cta{margin-top:14px;display:inline-flex;align-self:flex-start;background:var(--p-accent);color:var(--p-on,#0c0e12);font-weight:700;font-size:12px;padding:8px 15px;border-radius:7px}
-.pv-chips{display:flex;gap:6px;margin-top:14px;flex-wrap:wrap}
-.chip{font-size:10.5px;padding:4px 9px;border-radius:999px;background:var(--p-soft);color:var(--p-ink);border:1px solid rgba(255,255,255,.14)}
-.card-meta{padding:13px 16px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line)}
-.card-meta .t{font-weight:700;font-size:14.5px}
+.live-badge{position:absolute;top:14px;right:14px;z-index:5;background:#22c55e;color:#04220f;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 10px;border-radius:20px;box-shadow:0 4px 12px -2px rgba(34,197,94,.5)}
+
+/* the mini-site preview inside each card — themed per real live site via inline vars */
+.preview{position:relative;min-height:300px;padding:22px 24px 26px;display:flex;flex-direction:column;background:var(--p-bg);color:var(--p-ink);font-family:var(--p-font);flex:1 0 auto}
+.pv-topbar{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700}
+.pv-logo{display:flex;align-items:center;gap:8px}
+.pv-logo .mark{width:18px;height:18px;border-radius:5px;background:var(--p-accent)}
+.pv-nav{opacity:.65;display:flex;gap:11px;font-weight:500}
+.pv-hero{margin-top:auto;padding-top:26px;display:flex;flex-direction:column}
+.pv-kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--p-accent);font-weight:700;margin-bottom:10px}
+.pv-h{font-size:27px;line-height:1.08;font-weight:800;letter-spacing:-.01em}
+.pv-sub{font-size:13px;opacity:.78;margin-top:11px;max-width:38ch;line-height:1.55}
+.pv-cta{margin-top:18px;display:inline-flex;align-self:flex-start;background:var(--p-accent);color:var(--p-on,#0c0e12);font-weight:700;font-size:13px;padding:10px 18px;border-radius:7px}
+.pv-chips{display:flex;gap:7px;margin-top:16px;flex-wrap:wrap}
+.chip{font-size:11px;padding:5px 10px;border-radius:999px;background:var(--p-soft);color:var(--p-ink);border:1px solid rgba(255,255,255,.14)}
+.card-meta{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line)}
+.card-meta .t{font-weight:700;font-size:15px}
 .card-meta .c{font-size:12px;color:var(--muted);margin-top:2px}
-.open-hint{font-size:11.5px;color:var(--accent);white-space:nowrap;display:flex;align-items:center;gap:5px}
+.open-hint{font-size:12px;color:var(--accent);white-space:nowrap;display:flex;align-items:center;gap:5px;font-weight:700}
 
-/* ---------- modal (drill-in) ---------- */
-.modal{position:fixed;inset:0;z-index:60;display:none;background:rgba(6,8,11,.72);backdrop-filter:blur(4px);padding:34px 18px;overflow:auto}
-.modal.on{display:block}
-.sheet{max-width:940px;margin:0 auto;background:#0a0c10;border:1px solid var(--line);border-radius:20px;overflow:hidden;animation:pop .25s ease}
-@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
-.sheet-bar{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--line);background:#0d1015}
-.sheet-bar .lbl{font-size:12.5px;color:var(--muted)}
-.sheet-bar .x{cursor:pointer;font-size:20px;line-height:1;color:var(--muted);width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center}
-.sheet-bar .x:hover{background:#1a1f27;color:var(--ink)}
-.mock{min-height:560px;background:var(--p-bg);color:var(--p-ink);font-family:var(--p-font)}
-.m-nav{display:flex;align-items:center;justify-content:space-between;padding:18px 34px;border-bottom:1px solid rgba(255,255,255,.09)}
-.m-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
-.m-logo .mark{width:22px;height:22px;border-radius:6px;background:var(--p-accent)}
-.m-nav a{font-size:13.5px;opacity:.8;margin-left:22px}
-.m-hero{padding:54px 34px;display:grid;grid-template-columns:1.3fr .9fr;gap:30px;align-items:center}
-@media(max-width:760px){.m-hero{grid-template-columns:1fr}}
-.m-kicker{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--p-accent);font-weight:800;margin-bottom:14px}
-.m-h{font-size:clamp(30px,4.6vw,46px);line-height:1.03;font-weight:800;letter-spacing:-.02em}
-.m-sub{margin-top:16px;font-size:15.5px;opacity:.85;max-width:44ch}
-.m-cta-row{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
-.m-btn{background:var(--p-accent);color:var(--p-on,#0c0e12);font-weight:800;padding:13px 22px;border-radius:9px;font-size:14.5px}
-.m-btn.alt{background:transparent;color:var(--p-ink);border:1px solid currentColor}
-.m-panel{background:color-mix(in srgb,var(--p-ink) 12%,transparent);border:1px solid color-mix(in srgb,var(--p-ink) 20%,transparent);border-radius:14px;padding:20px}
-.m-panel .row{display:flex;justify-content:space-between;font-size:13.5px;padding:9px 0;border-bottom:1px dashed color-mix(in srgb,var(--p-ink) 26%,transparent)}
-.m-panel .row:last-child{border:none}
-.m-panel .row b{color:var(--p-accent)}
-.m-services{padding:34px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-@media(max-width:760px){.m-services{grid-template-columns:1fr}}
-.svc{background:color-mix(in srgb,var(--p-ink) 6%,transparent);border:1px solid color-mix(in srgb,var(--p-ink) 14%,transparent);border-radius:12px;padding:16px}
-.svc h4{font-size:15px;font-weight:800;margin-bottom:6px}
-.svc p{font-size:13px;opacity:.78}
-.m-reviews{padding:0 34px 40px;display:flex;gap:14px;flex-wrap:wrap}
-.rev{background:color-mix(in srgb,var(--p-ink) 6%,transparent);border:1px solid color-mix(in srgb,var(--p-ink) 14%,transparent);border-radius:12px;padding:16px;max-width:34ch}
-.stars{color:#ffcf5c;font-size:13px;letter-spacing:2px;margin-bottom:8px}
-.rev p{font-size:13.5px;opacity:.9}
-.rev .who{margin-top:10px;font-size:12px;color:var(--p-accent);font-weight:700}
-
-/* ---------- process / why (Decide) ---------- */
+/* ---------- why ---------- */
 .why{padding:20px 0 64px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media(max-width:820px){.why{grid-template-columns:1fr}}
 .wcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}
@@ -141,13 +101,13 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px;margin-top:20px}
 <header class="hero"><div class="wrap">
   <span class="eyebrow"><span class="dot"></span>Websites for the trades — built by one person, not an agency</span>
   <h1>Your shop has been trusted for decades. Your website should look like it.</h1>
-  <p class="sub">I build fast, mobile-first websites for plumbers, electricians, HVAC, roofers, bakers, barbers and the rest of local trade — so a customer can find your number and book in seconds. Below are real concepts I'd make for each trade.</p>
+  <p class="sub">I build fast, mobile-first websites for plumbers, electricians, HVAC and roofers — so a customer can find your number and book in seconds. Below are 4 real, fully built demo sites, live right now.</p>
   <div class="hero-actions">
-    <a class="btn-primary" href="#work">See the work</a>
+    <a class="btn-primary" href="#work">See the live sites</a>
     <a class="btn-ghost" href="#contact">Ask for a free mockup of your site</a>
   </div>
   <div class="hero-stats">
-    <div class="stat"><b>12 trades</b><span>concepts below, one per vertical</span></div>
+    <div class="stat"><b>4 trades</b><span>real sites, deployed and live</span></div>
     <div class="stat"><b>&lt;30s</b><span>from landing to "call now"</span></div>
     <div class="stat"><b>Mobile-first</b><span>most of your customers are on a phone</span></div>
   </div>
@@ -155,7 +115,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px;margin-top:20px}
 
 <section id="work"><div class="wrap">
   <div class="sec-head">
-    <div><h2>Pick your trade — open the concept</h2><p>Each one is a different design, tuned to how that business actually sells. Click any card to see the full mockup.</p></div>
+    <div><h2>Pick your trade — visit the live site</h2><p>Each one is a fully built, deployed website with its own design language. Click any card to open the real thing in a new tab.</p></div>
   </div>
   <div class="grid" id="grid"></div>
 </div></section>
@@ -177,71 +137,36 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px;margin-top:20px}
       <a class="foot-mail" href="mailto:ceo@unmade.lol">ceo@unmade.lol</a>
     </div>
   </div>
-  <div class="copy"><span>© UNMADE — built by Hermes, one developer doing the work personally.</span><span>Every concept on this page is a sample I'd build for that trade.</span></div>
+  <div class="copy"><span>© UNMADE — built by Hermes, one developer doing the work personally.</span><span>Every card below links to a real, live deployed site.</span></div>
 </div></footer>
 
-<div class="modal" id="modal"><div class="sheet">
-  <div class="sheet-bar"><span class="lbl" id="m-lbl"></span><span class="x" id="m-x">×</span></div>
-  <div class="mock" id="m-mock"></div>
-</div></div>
-
-<script>const TRADES=[{"id": "plumbing", "cat": "Plumber", "name": "Riverside Plumbing Co.", "tagline": "24/7 emergency plumbing, done right the first time.", "sub": "Family-owned since 1986. Licensed, bonded and insured across the metro — one call gets a real tech to your door fast.", "chips": ["Emergency", "Repipes", "Water heaters"], "p": {"bg": "#0b1f2a", "ink": "#eaf4f7", "accent": "#35c6d6", "on": "#04222a", "soft": "rgba(53,198,214,.16)"}, "font": "\"Helvetica Neue\",Arial,sans-serif", "svc": [["Emergency repair", "Same-day and overnight response for bursts, leaks and clogs."], ["Repiping & drains", "Whole-home repipes and hydro-jetting that last decades."], ["Water heaters", "Tank and tankless install, sized correctly for your home."]], "rev": {"t": "Called at 7am with a burst pipe under the sink. Tech was there in 40 minutes and had it fixed before lunch.", "w": "Dana R., homeowner"}, "live": "https://unmade-plumbing-demo-unmade-3a4d.vercel.app"}, {"id": "electric", "cat": "Electrician", "name": "Volt & Sons Electric", "tagline": "Licensed electricians for homes, panels and EV chargers.", "sub": "Father-son since 1984. Panel upgrades, rewiring, lighting and EV charger installs — quoted flat before we start.", "chips": ["Panels", "EV chargers", "Rewiring"], "p": {"bg": "#15171c", "ink": "#f2f3f5", "accent": "#ffd23f", "on": "#1a1602", "soft": "rgba(255,210,63,.18)"}, "font": "\"Helvetica Neue\",Arial,sans-serif", "svc": [["Panel upgrades", "200-amp panels and full service replacements."], ["EV charger install", "Level 2 home chargers, permit to completion."], ["Rewiring & lighting", "Whole-home rewires, recessed and outdoor lighting."]], "rev": {"t": "Upgraded our old fuse box to a modern panel. Clean work, clear quote, no surprises on the bill.", "w": "Marcus T."}, "live": "https://unmade-electrician-demo-unmade-3a4d.vercel.app"}, {"id": "hvac", "cat": "HVAC", "name": "Summit Air & Heating", "tagline": "Comfort year-round — AC, heat and indoor air quality.", "sub": "Family-owned since 1972. Honest diagnostics, upfront pricing, and same-day service when it matters most.", "chips": ["AC repair", "Furnaces", "Air quality"], "p": {"bg": "#0e2233", "ink": "#eef4f8", "accent": "#5aa9ff", "on": "#041627", "soft": "rgba(90,169,255,.16)"}, "font": "\"Helvetica Neue\",Arial,sans-serif", "svc": [["AC repair & install", "Diagnosis and replacement with honest recommendations."], ["Furnaces & heat pumps", "Efficient heating tuned for your climate."], ["Indoor air quality", "Filtration, humidity control and duct cleaning."]], "rev": {"t": "They told us we did NOT need a new system when two other companies said we did. That's why we call them now.", "w": "Priya S."}, "live": "https://unmade-hvac-demo-unmade-3a4d.vercel.app"}, {"id": "roofing", "cat": "Roofing", "name": "Keystone Roofing", "tagline": "Storm-ready roofs, installed to outlast the weather.", "sub": "Innung-trained roofers with 30+ years on the tools. Repairs, replacements and free inspections before monsoon season.", "chips": ["Replacement", "Repairs", "Inspections"], "p": {"bg": "#241a16", "ink": "#f5efe9", "accent": "#e8703a", "on": "#2a1206", "soft": "rgba(232,112,58,.18)"}, "font": "\"Helvetica Neue\",Arial,sans-serif", "svc": [["Roof replacement", "Full tear-offs with premium materials and warranty."], ["Storm repair", "Leaks, shingles and flashing fixed fast."], ["Free inspection", "Pre-season check with a written report."]], "rev": {"t": "After the hailstorm they had our roof inspected in a day and repaired before the next storm. Solid crew.", "w": "The Alvarez family"}, "live": "https://unmade-roofing-demo-unmade-3a4d.vercel.app"}, {"id": "locksmith", "cat": "Locksmith", "name": "Sentinel Lock & Key", "tagline": "Locked out? We're usually there in 20 minutes.", "sub": "Certified master locksmiths — residential, commercial and automotive. No drill-through damage when it can be avoided.", "chips": ["24/7", "Rekeying", "Smart locks"], "p": {"bg": "#101318", "ink": "#f1efe9", "accent": "#d8b25a", "on": "#241c06", "soft": "rgba(216,178,90,.16)"}, "font": "Georgia,\"Times New Roman\",serif", "svc": [["Emergency entry", "Fast, careful lockouts for home and car."], ["Rekeying & security", "New keys and higher-security cylinders."], ["Smart locks", "Install and set up modern access systems."]], "rev": {"t": "Locked out of my apartment at midnight. He was here in under twenty minutes and didn't scratch the door.", "w": "J. Okafor"}}, {"id": "painting", "cat": "Painter", "name": "Brushwork Painting Co.", "tagline": "Crisp lines, clean jobs, colors that last.", "sub": "A small crew of careful painters for interiors and exteriors. We prep like it's our own house — because the finish shows.", "chips": ["Interior", "Exterior", "Color consult"], "p": {"bg": "#f4efe7", "ink": "#2a2620", "accent": "#c15b3c", "on": "#fff6ef", "soft": "rgba(193,91,60,.14)"}, "font": "\"Helvetica Neue\",Arial,sans-serif", "svc": [["Interior painting", "Walls, trim and cabinets with clean edges."], ["Exterior & siding", "Weather-ready prep and durable finishes."], ["Color consult", "Help you pick a palette that works in your light."]], "rev": {"t": "The lines on our trim are razor sharp. Nearest neighbors asked who we used.", "w": "Kelsey M."}}, {"id": "bakery", "cat": "Bakery / Pastry", "name": "Golden Crust Bakehouse", "tagline": "Baked fresh every morning, the way it should be.", "sub": "A neighborhood bakehouse since 1968. Sourdough, laminated pastries and custom cakes — made in small batches daily.", "chips": ["Sourdough", "Pastries", "Custom cakes"], "p": {"bg": "#f7efe2", "ink": "#3a2c1e", "accent": "#b5702f", "on": "#fff8ef", "soft": "rgba(181,112,47,.16)"}, "font": "Georgia,\"Times New Roman\",serif", "svc": [["Daily breads", "Naturally leavened loaves baked at dawn."], ["Laminated pastries", "Croissants and danishes made from scratch."], ["Custom cakes & events", "Weddings, birthdays and wholesale orders."]], "rev": {"t": "Their sourdough is the best in town, full stop. I plan my week around Saturday pickup.", "w": "Renata L."}}, {"id": "auto", "cat": "Auto repair", "name": "Grand & Cicero Auto", "tagline": "Three generations of honest auto repair since 1946.", "sub": "Family-run for over eighty years. We fix it right, explain what's actually wrong, and never sell you work you don't need.", "chips": ["Diagnostics", "Brakes", "Full service"], "p": {"bg": "#171a20", "ink": "#eef0f3", "accent": "#d64545", "on": "#fff2f2", "soft": "rgba(214,69,69,.18)"}, "font": "\"Helvetica Neue\",Arial,sans-serif", "svc": [["Diagnostics", "Honest read on what's really going wrong."], ["Brakes & suspension", "Parts and labor quoted before we start."], ["Full service", "Oil, tires, A/C and pre-purchase checks."]], "rev": {"t": "They told me a 'major' repair was actually minor. That honesty is why my whole family goes here.", "w": "Sam W."}}, {"id": "barber", "cat": "Barbershop", "name": "The Straight Razor", "tagline": "Classic cuts, sharp fades, zero rush.", "sub": "A proper barbershop — hot towel shaves, precision fades and a chair that's yours for the hour. Walk-ins welcome, bookings preferred.", "chips": ["Fades", "Hot-towel shave", "Walk-ins"], "p": {"bg": "#0d0d0f", "ink": "#f3efe8", "accent": "#c9a24b", "on": "#1c1607", "soft": "rgba(201,162,75,.16)"}, "font": "Georgia,\"Times New Roman\",serif", "svc": [["Precision cuts & fades", "Clean lines, tailored to your head."], ["Hot-towel shaves", "The old-school ritual, done properly."], ["Beard work", "Shaping and detailing that holds its shape."]], "rev": {"t": "Best fade I've had in years. The chair, the music, the patience — it's a whole experience.", "w": "Devon P."}}, {"id": "salon", "cat": "Hair salon", "name": "Maison Belle Salon", "tagline": "Cuts and color that look like you, only better.", "sub": "A calm, appointment-only studio. Color correction, balayage and precision cuts from stylists who actually listen first.", "chips": ["Color", "Balayage", "Precision cuts"], "p": {"bg": "#f6eef0", "ink": "#3a2b31", "accent": "#9c5b74", "on": "#fff5f8", "soft": "rgba(156,91,116,.15)"}, "font": "Georgia,\"Times New Roman\",serif", "svc": [["Precision cuts", "Consultation-first, tailored to your face and hair."], ["Color & balayage", "Dimensional color that grows out gracefully."], ["Treatments", "Repair and gloss for healthy shine."]], "rev": {"t": "Finally a stylist who listens before she touches my hair. The color is perfect.", "w": "Amara K."}}, {"id": "landscaping", "cat": "Landscaping", "name": "Evergreen Yard Co.", "tagline": "Yards that look cared for, all season long.", "sub": "Family-owned lawn and landscape care. Design, install and weekly maintenance — we bring personality back to your yard.", "chips": ["Design", "Install", "Weekly care"], "p": {"bg": "#12241a", "ink": "#eef5ee", "accent": "#8fc96b", "on": "#0f2013", "soft": "rgba(143,201,107,.16)"}, "font": "\"Helvetica Neue\",Arial,sans-serif", "svc": [["Landscape design", "Plans that fit your space and budget."], ["Install & hardscape", "Sod, beds, patios and irrigation."], ["Weekly maintenance", "Mowing, edging and seasonal cleanups."]], "rev": {"t": "Our yard went from a patchwork mess to something we're proud of. They show up when they say.", "w": "The Nguyen family"}}, {"id": "chimney", "cat": "Chimney sweep", "name": "Hearth & Flue", "tagline": "A clean, safe chimney is the one you never think about.", "sub": "Certified sweeps for residential and commercial flues. Annual cleaning, inspections and repair — done before fire season, not after a scare.", "chips": ["Cleaning", "Inspection", "Repair"], "p": {"bg": "#1c1512", "ink": "#f3ece6", "accent": "#e08a3c", "on": "#241405", "soft": "rgba(224,138,60,.17)"}, "font": "Georgia,\"Times New Roman\",serif", "svc": [["Annual cleaning", "Full soot and creosote removal."], ["Level-1/2 inspection", "Certified check with a written report."], ["Flue repair & lining", "Repair and relining for safe draft."]], "rev": {"t": "Booked them before the cold snap. Clean, tidy, and they explained exactly what they found.", "w": "G. Whitfield"}}];
+<script>const TRADES=[
+{"id":"plumbing","cat":"Plumber","name":"Riverside Plumbing Co.","headline":"Three generations of pipes done right.","sub":"Family-owned since 1986. Licensed, bonded and insured — 24/7 emergency dispatch, flat-rate pricing, same technician start to finish.","chips":["24/7 Emergency","Repiping & drains","Water heaters"],"p":{"bg":"#0d1b1a","ink":"#f4ecdf","accent":"#e2925a","on":"#1a0f08","soft":"rgba(226,146,90,.16)"},"font":"Georgia,'Times New Roman',serif","live":"https://unmade-plumbing-demo-unmade-3a4d.vercel.app"},
+{"id":"electric","cat":"Electrician","name":"Volt & Sons Electric","headline":"Power done right, the first time.","sub":"Father-son licensed electricians since 1984. Panel upgrades, EV charger installs, and full rewiring — flat-quoted before we start.","chips":["Panel upgrades","EV chargers","Rewiring"],"p":{"bg":"#0b0d10","ink":"#eceff2","accent":"#ffc93c","on":"#241c02","soft":"rgba(255,201,60,.16)"},"font":"'Space Grotesk',sans-serif","live":"https://unmade-electrician-demo-unmade-3a4d.vercel.app"},
+{"id":"hvac","cat":"HVAC","name":"Summit Air & Heating","headline":"Comfort, done honestly — in every season.","sub":"Family-owned since 1972. Honest diagnostics, upfront pricing, same-day service for AC, furnaces, heat pumps and indoor air quality.","chips":["AC repair","Furnaces & heat pumps","Air quality"],"p":{"bg":"#171512","ink":"#faf6ee","accent":"#e8734a","on":"#2a1206","soft":"rgba(232,115,74,.16)"},"font":"'Georgia','Times New Roman',serif","live":"https://unmade-hvac-demo-unmade-3a4d.vercel.app"},
+{"id":"roofing","cat":"Roofing","name":"Keystone Roofing","headline":"Roofs built to outlast the next storm.","sub":"Serving the region since 1993. Storm-ready replacements, fast repairs, and free inspections before the season hits.","chips":["Roof replacement","Storm repair","Free inspection"],"p":{"bg":"#211d1a","ink":"#f7f1e6","accent":"#e2703f","on":"#2a1206","soft":"rgba(226,112,63,.16)"},"font":"'Georgia','Times New Roman',serif","live":"https://unmade-roofing-demo-unmade-3a4d.vercel.app"}
+];
 
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const grid=document.getElementById("grid");
 function cardHTML(t){
   const p=t.p, f=`--p-bg:${p.bg};--p-ink:${p.ink};--p-accent:${p.accent};--p-on:${p.on};--p-soft:${p.soft};--p-font:${t.font}`;
-  return `<article class="card" data-id="${t.id}" style="${f}">
-    ${t.live ? '<span class="live-badge">Live demo</span>' : ""}
+  return `<article class="card" data-live="${t.live}" style="${f}">
+    <span class="live-badge">Live demo</span>
     <div class="preview">
-      <div class="pv-topbar"><span class="pv-logo"><span class="mark"></span>${esc(t.name)}</span><span class="pv-nav"><i>Services</i><i>About</i><i>Contact</i></span></div>
+      <div class="pv-topbar"><span class="pv-logo"><span class="mark"></span>${esc(t.name)}</span><span class="pv-nav"><i>Services</i><i>Contact</i></span></div>
       <div class="pv-hero">
         <div class="pv-kicker">${esc(t.cat)}</div>
-        <div class="pv-h">${esc(t.tagline)}</div>
+        <div class="pv-h">${esc(t.headline)}</div>
         <div class="pv-sub">${esc(t.sub)}</div>
         <span class="pv-cta">Call now</span>
         <div class="pv-chips">${t.chips.map(c=>`<span class="chip">${esc(c)}</span>`).join("")}</div>
       </div>
     </div>
-    <div class="card-meta"><div><div class="t">${esc(t.cat)}</div><div class="c">Sample concept — click to open</div></div><span class="open-hint">Open →</span></div>
+    <div class="card-meta"><div><div class="t">${esc(t.cat)}</div><div class="c">Real deployed site — click to open</div></div><span class="open-hint">Open live site &rarr;</span></div>
   </article>`;
 }
 grid.innerHTML=TRADES.map(cardHTML).join("");
-function mockHTML(t){
-  const p=t.p, f=`--p-bg:${p.bg};--p-ink:${p.ink};--p-accent:${p.accent};--p-on:${p.on};--p-soft:${p.soft};--p-font:${t.font}`;
-  return `<div style="${f}">
-    <nav class="m-nav"><span class="m-logo"><span class="mark"></span>${esc(t.name)}</span><span><a>Services</a><a>About</a><a>Reviews</a><a>Contact</a></span></nav>
-    <div class="m-hero">
-      <div>
-        <div class="m-kicker">${esc(t.cat)} · Local &amp; family-owned</div>
-        <h2 class="m-h">${esc(t.tagline)}</h2>
-        <p class="m-sub">${esc(t.sub)}</p>
-        <div class="m-cta-row"><span class="m-btn">Call now</span><span class="m-btn alt">Request a quote</span></div>
-      </div>
-      <div class="m-panel">
-        <div class="row"><span>Licensed &amp; insured</span><b>✓</b></div>
-        <div class="row"><span>Response time</span><b>Fast</b></div>
-        <div class="row"><span>Upfront pricing</span><b>Yes</b></div>
-        <div class="row"><span>Satisfaction</span><b>Guaranteed</b></div>
-      </div>
-    </div>
-    <div class="m-services">${t.svc.map(s=>`<div class="svc"><h4>${esc(s[0])}</h4><p>${esc(s[1])}</p></div>`).join("")}</div>
-    <div class="m-reviews">
-      <div class="rev"><div class="stars">★★★★★</div><p>"${esc(t.rev.t)}"</p><div class="who">${esc(t.rev.w)}</div></div>
-      <div class="rev"><div class="stars">★★★★★</div><p>"Professional, on time, and the work held up. We'd call again without hesitation."</p><div class="who">Verified customer</div></div>
-    </div>
-    ${t.live ? `<div class="m-live-cta"><a href="${t.live}" target="_blank" rel="noopener">Open the full live site &rarr;</a></div>` : ""}
-  </div>`;
-}
-const modal=document.getElementById("modal"), mMock=document.getElementById("m-mock"), mLbl=document.getElementById("m-lbl");
-function open(id){ const t=TRADES.find(x=>x.id===id); if(!t) return; mLbl.textContent=t.cat+" — sample concept";
-  mMock.style.setProperty("--p-bg",t.p.bg); mMock.style.setProperty("--p-ink",t.p.ink); mMock.style.setProperty("--p-accent",t.p.accent);
-  mMock.style.setProperty("--p-on",t.p.on); mMock.style.setProperty("--p-soft",t.p.soft); mMock.style.setProperty("--p-font",t.font);
-  mMock.innerHTML=mockHTML(t); modal.classList.add("on"); document.body.style.overflow="hidden"; }
-function close(){ modal.classList.remove("on"); document.body.style.overflow=""; }
-grid.addEventListener("click",e=>{ const c=e.target.closest(".card"); if(c) open(c.dataset.id); });
-document.getElementById("m-x").addEventListener("click",close);
-modal.addEventListener("click",e=>{ if(e.target===modal) close(); });
-document.addEventListener("keydown",e=>{ if(e.key==="Escape") close(); });
+grid.addEventListener("click",e=>{ const c=e.target.closest(".card"); if(c && c.dataset.live) window.open(c.dataset.live, "_blank", "noopener"); });
 </script>
 </body></html>

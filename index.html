@@ -107,18 +107,9 @@ h1 em{font-style:italic;font-weight:500;color:var(--accent);background:linear-gr
 .live-badge{position:absolute;top:16px;right:16px;z-index:5;background:#1a7a44;color:#c8ffd8;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:6px 12px 6px 10px;border-radius:20px;box-shadow:0 4px 16px -2px rgba(34,197,94,.45);display:inline-flex;align-items:center;gap:6px;transform:translateZ(50px)}
 .live-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;animation:pulse-dot 2s ease-in-out infinite}
 
-.preview{position:relative;min-height:320px;padding:24px 26px 28px;display:flex;flex-direction:column;background:var(--p-bg);color:var(--p-ink);font-family:var(--p-font);flex:1 0 auto;transform:translateZ(20px)}
-.pv-topbar{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700}
-.pv-logo{display:flex;align-items:center;gap:8px}
-.pv-logo .mark{width:18px;height:18px;border-radius:5px;background:var(--p-accent)}
-.pv-nav{opacity:.65;display:flex;gap:11px;font-weight:500}
-.pv-hero{margin-top:auto;padding-top:28px;display:flex;flex-direction:column}
-.pv-kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--p-accent);font-weight:700;margin-bottom:11px}
-.pv-h{font-size:28px;line-height:1.08;font-weight:800;letter-spacing:-.01em}
-.pv-sub{font-size:13px;opacity:.78;margin-top:12px;max-width:38ch;line-height:1.55}
-.pv-cta{margin-top:19px;display:inline-flex;align-self:flex-start;background:var(--p-accent);color:var(--p-on,#0c0e12);font-weight:700;font-size:13px;padding:10px 18px;border-radius:7px;transform:translateZ(30px)}
-.pv-chips{display:flex;gap:7px;margin-top:17px;flex-wrap:wrap}
-.chip{font-size:11px;padding:5px 10px;border-radius:999px;background:var(--p-soft);color:var(--p-ink);border:1px solid rgba(255,255,255,.14)}
+.shot{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0a0c10;flex:1 0 auto}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;transform:translateZ(20px);transition:transform .6s var(--ease-soft)}
+.card:hover .shot img{transform:translateZ(20px) scale(1.035)}
 .card-meta{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);transform:translateZ(20px);background:var(--panel)}
 .card-meta .t{font-weight:700;font-size:15.5px}
 .card-meta .c{font-size:12px;color:var(--muted);margin-top:2px}
@@ -234,20 +225,10 @@ const ARROW='<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d
 const SPINNER='<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#ff7a1a" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="40 60"/></svg>';
 
 function cardHTML(t){
-  const p=t.p, f=`--p-bg:${p.bg};--p-ink:${p.ink};--p-accent:${p.accent};--p-on:${p.on};--p-soft:${p.soft};--p-font:${t.font}`;
-  return `<article class="card reveal" data-live="${t.live}" style="${f}">
+  return `<article class="card reveal" data-live="${t.live}">
     <span class="live-badge">Live demo</span>
     <div class="card-overlay">${SPINNER}</div>
-    <div class="preview">
-      <div class="pv-topbar"><span class="pv-logo"><span class="mark"></span>${esc(t.name)}</span><span class="pv-nav"><i>Services</i><i>Contact</i></span></div>
-      <div class="pv-hero">
-        <div class="pv-kicker">${esc(t.cat)}</div>
-        <div class="pv-h">${esc(t.headline)}</div>
-        <div class="pv-sub">${esc(t.sub)}</div>
-        <span class="pv-cta">Call now</span>
-        <div class="pv-chips">${t.chips.map(c=>`<span class="chip">${esc(c)}</span>`).join("")}</div>
-      </div>
-    </div>
+    <div class="shot"><img src="images/${t.id}.jpg" alt="${esc(t.name)} — live site design" loading="lazy"></div>
     <div class="card-meta"><div><div class="t">${esc(t.cat)}</div><div class="c">Real deployed site — click to open</div></div><span class="open-hint">Open live site ${ARROW}</span></div>
   </article>`;
 }
